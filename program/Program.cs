@@ -480,8 +480,80 @@ do
             break;
 
         case "8":
-            // exibir todos os cães com uma característica específica
-            Console.WriteLine("Em Construção - Verifique novamente mais tarde.");
+            // exibir todos os cachorros com uma característica específica
+
+            string dogCharacteristics = "";
+
+            while (dogCharacteristics == "")
+            {
+                Console.WriteLine($"\nDigite as características que deseja em um cachorro separadas por vírgulas:");
+                readResult = Console.ReadLine();
+
+                if (readResult != null)
+                {
+                    dogCharacteristics = readResult.ToLower();
+                    Console.WriteLine();
+                }
+            }
+
+            string[] dogSearch = dogCharacteristics.Split(",");
+            for (int i = 0; i < dogSearch.Length; i++)
+            {
+                dogSearch[i] = dogSearch[i].Trim();
+            }
+
+            Array.Sort(dogSearch);
+            string[] searchingIcon = {".", ".", "."};
+
+            // loop na array ourAnimals para buscar correspondência
+            bool dogFound = false;
+            string dogDescription = "";
+
+            for (int i = 0; i < maxPets; i++)
+            {
+                if (ourAnimals[i, 1].Contains("cachorro"))
+                {
+                    dogDescription = ourAnimals[i, 4].ToLower() + "\n" + ourAnimals[i, 5].ToLower();
+                    bool matchCurrentDog = false;
+
+                    foreach (string term in dogSearch)
+                    {
+                        if (term != null && term.Trim() != "")
+                        {
+                            for(int j = 3; j > -1; j--)
+                            {
+                                foreach(string icon in searchingIcon)
+                                {
+                                    Console.Write($"\rConferindo nosso cachorro {ourAnimals[i, 3]} para {term.Trim()} {icon} {j.ToString()}");
+                                    Thread.Sleep(100);
+                                }
+
+                                Console.Write($"\r{new String(' ', Console.BufferWidth)}");
+                            }
+                            
+                            if (dogDescription.Contains(" " + term.Trim() + " "))
+                            {
+                                Console.WriteLine($"\rNosso cachorro {ourAnimals[i, 3]} corresponde a sua pesquisa por {term.Trim()}!");
+
+                                matchCurrentDog = true;
+                                dogFound = true;
+                            }
+                        }
+                    }
+
+                    //exibir informações do cachorro em caso de correspondência
+                    if (matchCurrentDog)
+                    {
+                        Console.WriteLine($"\r{ourAnimals[i,3]} ({ourAnimals[i, 0]})\n{dogDescription}\n");
+                    }
+                }
+            }
+
+            if (!dogFound)
+            {
+                Console.WriteLine("Infelizmente nenhum dos nossos cachorros corresponde a pesquisa por: " + dogCharacteristics);
+            }
+
             Console.WriteLine("\nAperte ENTER para continuar");
             readResult = Console.ReadLine();
             break;
