@@ -402,6 +402,7 @@ do
 
         case "7":
             // exibir todos os gatos com uma característica específica
+
             string catCharacteristics = "";
 
             while (catCharacteristics == "")
@@ -422,6 +423,9 @@ do
                 catSearch[i] = catSearch[i].Trim();
             }
 
+            Array.Sort(catSearch);
+            string[] searching = {".", ".", "."};
+
             // loop na array ourAnimals para buscar correspondência
             bool catFound = false;
             string catDescription = "";
@@ -430,13 +434,24 @@ do
             {
                 if (ourAnimals[i, 1].Contains("gato"))
                 {
-                    catDescription = ourAnimals[i, 4] + "\n" + ourAnimals[i, 5];
+                    catDescription = ourAnimals[i, 4].ToLower() + "\n" + ourAnimals[i, 5].ToLower();
                     bool matchCurrentCat = false;
 
                     foreach (string term in catSearch)
                     {
                         if (term != null && term.Trim() != "")
                         {
+                            for(int j = 3; j > -1; j--)
+                            {
+                                foreach(string icon in searching)
+                                {
+                                    Console.Write($"\rConferindo nosso gato {ourAnimals[i, 3]} para {term.Trim()} {icon} {j.ToString()}");
+                                    Thread.Sleep(100);
+                                }
+
+                                Console.Write($"\r{new String(' ', Console.BufferWidth)}");
+                            }
+                            
                             if (catDescription.Contains(" " + term.Trim() + " "))
                             {
                                 Console.WriteLine($"\rNosso gato {ourAnimals[i, 3]} corresponde a sua pesquisa por {term.Trim()}!");
