@@ -284,11 +284,11 @@ do
             // certificar-se que a idade e a descrição física dos animais estão completas
             for (int i = 0; i < maxPets; i++)
             {
-                if (ourAnimals[i, 2] == "Age: ?" && ourAnimals[i, 0] != "ID #: ")
+                if (ourAnimals[i, 2] == "Idade: ?" && ourAnimals[i, 0] != "ID #: ")
                 {
                     do
                     {
-                        Console.WriteLine($"Enter an age for {ourAnimals[i, 0]}");
+                        Console.WriteLine($"Digite a idade para o animal {ourAnimals[i, 0]}");
                         readResult = Console.ReadLine();
                         if (readResult != null)
                         {
@@ -296,18 +296,18 @@ do
                             validEntry = int.TryParse(animalAge, out petAge);
                         }
                     } while (validEntry == false);
-                    ourAnimals[i, 2] = "Age: " + animalAge.ToString();
+                    ourAnimals[i, 2] = "Idade: " + animalAge.ToString();
                 }
 
-                if (ourAnimals[i, 4] == "Physical description: " && ourAnimals[i, 0] != "ID #: ")
+                if (ourAnimals[i, 4] == "Descrição física: " && ourAnimals[i, 0] != "ID #: ")
                 {
                     do
                     {
-                        Console.WriteLine($"Enter a physical description for {ourAnimals[i, 0]} (size, color, gender, weight, housebroken)");
+                        Console.WriteLine($"Digite a descrição física para o animal {ourAnimals[i, 0]} (tamanho, cor, gênero, peso, treinamento)");
                         readResult = Console.ReadLine();
                         if (readResult != null)
                         {
-                            animalPhysicalDescription = readResult.ToLower();
+                            animalPhysicalDescription = readResult;
                             if (animalPhysicalDescription == "")
                             {
                                 validEntry = false;
@@ -320,29 +320,29 @@ do
                         }
                     } while (validEntry == false);
 
-                    ourAnimals[i, 4] = "Physical description: " + animalPhysicalDescription;
+                    ourAnimals[i, 4] = "Descrição física: " + animalPhysicalDescription;
                 } 
             }
-        Console.WriteLine("\n\rAge and physical description fields are complete for all of our friends.");
+        Console.WriteLine("\n\rAs informações de idade e descrição física estão completas para todos os nossos pets!");
         Console.WriteLine("\nAperte ENTER para continuar");
         readResult = Console.ReadLine();
         break;
 
         case "4":
         // certificar-se que os nomes e personalidades dos animais estão completos
-        // ensure animal nicknames and personality are complete
+
         for (int i = 0; i < maxPets; i++)
         {
-            if (ourAnimals[i, 3] == "Nickname: " && ourAnimals[i, 0] != "ID #: ")
+            if (ourAnimals[i, 3] == "Nome: " && ourAnimals[i, 0] != "ID #: ")
             {
                 do
                 {
-                    Console.WriteLine($"Enter a nickname for {ourAnimals[i, 0]}");
+                    Console.WriteLine($"Digite um nome para o animal {ourAnimals[i, 0]}");
                     readResult = Console.ReadLine();
 
                     if (readResult != null)
                     {
-                        animalNickname = readResult.ToLower();
+                        animalNickname = readResult;
                         if (animalNickname == "")
                         {
                             validEntry = false;
@@ -354,18 +354,18 @@ do
                     }
                 } while (validEntry == false);
                 
-                ourAnimals[i, 3] = "Nickname: " + animalNickname;
+                ourAnimals[i, 3] = "Nome: " + animalNickname;
             }
 
-            if (ourAnimals[i, 5] == "Personality: " && ourAnimals[i, 0] != "ID #: ")
+            if (ourAnimals[i, 5] == "Personalidade: " && ourAnimals[i, 0] != "ID #: ")
             {
                 do
                 {
-                    Console.WriteLine($"Enter a personality description for {ourAnimals[i, 0]} (likes or dislikes, tricks, energy level)");
+                    Console.WriteLine($"Digite uma descrição de personalidade para o animal {ourAnimals[i, 0]} (do que ele gosta, truques, nível de energia)");
                     readResult = Console.ReadLine();
                     if (readResult != null)
                     {
-                        animalPersonalityDescription = readResult.ToLower();
+                        animalPersonalityDescription = readResult;
                         if (animalPersonalityDescription == "")
                         {
                             validEntry = false;
@@ -376,17 +376,18 @@ do
                     }
                 } while (validEntry == false);
 
-                ourAnimals[i, 5] = "Personality: " + animalPersonalityDescription;
+                ourAnimals[i, 5] = "Personalidade: " + animalPersonalityDescription;
             }
         }
         
-        Console.WriteLine("\n\rNickname and personality description fields are complete for all of our friends.");
+        Console.WriteLine("\n\rAs informações de nome e personalidade estão completas para todos os nossos pets!");
         Console.WriteLine("\nAperte ENTER para continuar");
         readResult = Console.ReadLine();
         break;
 
         case "5":
             // editar a idade de um animal
+
             Console.WriteLine("Em Construção - Verifique novamente mais tarde.");
             Console.WriteLine("\nAperte ENTER para continuar");
             readResult = Console.ReadLine();
@@ -401,7 +402,64 @@ do
 
         case "7":
             // exibir todos os gatos com uma característica específica
-            Console.WriteLine("Em Construção - Verifique novamente mais tarde.");
+            string catCharacteristics = "";
+
+            while (catCharacteristics == "")
+            {
+                Console.WriteLine($"\nDigite as características que deseja em um gato separadas por vírgulas:");
+                readResult = Console.ReadLine();
+
+                if (readResult != null)
+                {
+                    catCharacteristics = readResult.ToLower();
+                    Console.WriteLine();
+                }
+            }
+
+            string[] catSearch = catCharacteristics.Split(",");
+            for (int i = 0; i < catSearch.Length; i++)
+            {
+                catSearch[i] = catSearch[i].Trim();
+            }
+
+            // loop na array ourAnimals para buscar correspondência
+            bool catFound = false;
+            string catDescription = "";
+
+            for (int i = 0; i < maxPets; i++)
+            {
+                if (ourAnimals[i, 1].Contains("gato"))
+                {
+                    catDescription = ourAnimals[i, 4] + "\n" + ourAnimals[i, 5];
+                    bool matchCurrentCat = false;
+
+                    foreach (string term in catSearch)
+                    {
+                        if (term != null && term.Trim() != "")
+                        {
+                            if (catDescription.Contains(" " + term.Trim() + " "))
+                            {
+                                Console.WriteLine($"\rNosso gato {ourAnimals[i, 3]} corresponde a sua pesquisa por {term.Trim()}!");
+
+                                matchCurrentCat = true;
+                                catFound = true;
+                            }
+                        }
+                    }
+
+                    //exibir informações do gato em caso de correspondência
+                    if (matchCurrentCat)
+                    {
+                        Console.WriteLine($"\r{ourAnimals[i,3]} ({ourAnimals[i, 0]})\n{catDescription}\n");
+                    }
+                }
+            }
+
+            if (!catFound)
+            {
+                Console.WriteLine("Infelizmente nenhum dos nossos gatos corresponde a pesquisa por: " + catCharacteristics);
+            }
+
             Console.WriteLine("\nAperte ENTER para continuar");
             readResult = Console.ReadLine();
             break;
