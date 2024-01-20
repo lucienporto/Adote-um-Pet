@@ -1,6 +1,4 @@
-// Projeto baseado no que foi criado durante o curso de C# no freecodecamp/microsoft
-// Decidi por manter o nome das variáveis em inglês, porém, traduzi os demais textos do app
-// Algumas opções do app podem ainda não estar completamente prontas, mas pretendo finalizar todas
+// Projeto baseado no que foi criado durante o curso de C# no freeCodeCamp/Microsoft
 
 // o array ourAnimals que guarda os dados dos animais contém as seguintes informações 
 string animalSpecies = "";
@@ -17,7 +15,7 @@ string menuSelection = "";
 bool validEntry = false;
 int petAge;
 
-//array usada para guardar dados em tempo de execução, não há dados persistentes
+// array usada para guardar dados em tempo de execução, não há dados persistentes
 string[,] ourAnimals = new string[maxPets, 6];
 
 // criar entradas iniciais para o array ourAnimals
@@ -80,7 +78,7 @@ for (int i = 0; i < maxPets; i++)
     ourAnimals[i, 5] = "Personalidade: " + animalPersonalityDescription;
 }
 
-//exibir as opções do menu principal
+// exibindo o menu principal
 do
 {
     Console.Clear();
@@ -401,7 +399,8 @@ do
                     Console.WriteLine();
                 }
             }
-
+            
+            // loop para verificar a correspondência do ID do animal para editar a idade
             for (int i = 0; i < maxPets; i++)
             {
                 if (ourAnimals[i, 0].Contains(selectId))
@@ -495,7 +494,7 @@ do
                         }
                     }
 
-                    //exibir informações do gato em caso de correspondência
+                    // exibir informações do gato em caso de correspondência
                     if (matchCurrentCat)
                     {
                         Console.WriteLine($"\r{ourAnimals[i,3]} ({ourAnimals[i, 0]})\n{catDescription}\n");
@@ -574,7 +573,7 @@ do
                         }
                     }
 
-                    //exibir informações do cachorro em caso de correspondência
+                    // exibir informações do cachorro em caso de correspondência
                     if (matchCurrentDog)
                     {
                         Console.WriteLine($"\r{ourAnimals[i,3]} ({ourAnimals[i, 0]})\n{dogDescription}\n");
