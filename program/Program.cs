@@ -388,7 +388,40 @@ do
         case "5":
             // editar a idade de um animal
 
-            Console.WriteLine("Em Construção - Verifique novamente mais tarde.");
+            string selectId = "";
+
+            while (selectId == "")
+            {
+                Console.WriteLine("Digite o ID do animal que deseja alterar a idade:");
+                readResult = Console.ReadLine();
+
+                if (readResult != null)
+                {
+                    selectId = readResult.ToLower().Trim();
+                    Console.WriteLine();
+                }
+            }
+
+            for (int i = 0; i < maxPets; i++)
+            {
+                if (ourAnimals[i, 0].Contains(selectId))
+                {
+                    Console.WriteLine($"Digite a nova idade para {ourAnimals[i,3]}");
+                    readResult = Console.ReadLine();
+
+                    if (readResult != null)
+                    {
+                        animalAge = readResult;
+                    }
+                }
+                else
+                {
+                    continue;
+                }
+
+                ourAnimals[i, 2] = "Idade: " + animalAge;
+            }
+
             Console.WriteLine("\nAperte ENTER para continuar");
             readResult = Console.ReadLine();
             break;
