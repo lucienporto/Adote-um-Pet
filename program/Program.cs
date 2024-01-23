@@ -14,8 +14,10 @@ string? readResult;
 string menuSelection = "";
 bool validEntry = false;
 int petAge;
+string selectId = "";
+string[] searching = {".", "..", "..."};
 
-// array usada para guardar dados em tempo de execução, não há dados persistentes
+//array usada para guardar dados em tempo de execução, não há dados persistentes
 string[,] ourAnimals = new string[maxPets, 6];
 
 // criar entradas iniciais para o array ourAnimals
@@ -78,7 +80,7 @@ for (int i = 0; i < maxPets; i++)
     ourAnimals[i, 5] = "Personalidade: " + animalPersonalityDescription;
 }
 
-// exibindo o menu principal
+//exibir as opções do menu principal
 do
 {
     Console.Clear();
@@ -93,8 +95,9 @@ do
     Console.WriteLine(" 4. Preencher informações que faltam de nomes e personalidade");
     Console.WriteLine(" 5. Editar a idade de um animal");
     Console.WriteLine(" 6. Editar a personalidade de um animal");
-    Console.WriteLine(" 7. Exibir todos os gatos com uma característica específica");
-    Console.WriteLine(" 8. Exibir todos os cães com uma característica específica");
+    Console.WriteLine(" 7. Editar a descrição física de um animal");
+    Console.WriteLine(" 8. Exibir todos os gatos com uma característica específica");
+    Console.WriteLine(" 9. Exibir todos os cães com uma característica específica");
     Console.WriteLine("\nDigite o número selecionado ou digite 'sair' para sair do programa");
 
     readResult = Console.ReadLine();
@@ -107,6 +110,7 @@ do
     {
         case "1":
             // listar todas as informações atuais dos animais
+            
             for (int i = 0; i < maxPets; i++)
             {
                 if (ourAnimals[i, 0] != "ID #: ")
@@ -124,6 +128,7 @@ do
 
         case "2":
             // adicionar um novo animal ao array ourAnimals
+            
             string anotherPet = "s";
             int petCount = 0;
             for (int i = 0; i < maxPets; i++)
@@ -280,6 +285,7 @@ do
 
         case "3":
             // certificar-se que a idade e a descrição física dos animais estão completas
+            
             for (int i = 0; i < maxPets; i++)
             {
                 if (ourAnimals[i, 2] == "Idade: ?" && ourAnimals[i, 0] != "ID #: ")
@@ -386,8 +392,6 @@ do
         case "5":
             // editar a idade de um animal
 
-            string selectId = "";
-
             while (selectId == "")
             {
                 Console.WriteLine("Digite o ID do animal que deseja alterar a idade:");
@@ -399,8 +403,7 @@ do
                     Console.WriteLine();
                 }
             }
-            
-            // loop para verificar a correspondência do ID do animal para editar a idade
+
             for (int i = 0; i < maxPets; i++)
             {
                 if (ourAnimals[i, 0].Contains(selectId))
@@ -421,18 +424,116 @@ do
                 ourAnimals[i, 2] = "Idade: " + animalAge;
             }
 
+            if (selectId != "")
+            {
+                selectId = "";
+            }
+            else
+            {
+                continue;
+            }
+
             Console.WriteLine("\nAperte ENTER para continuar");
             readResult = Console.ReadLine();
             break;
 
         case "6":
             // editar a descrição de personalidade de um animal
-            Console.WriteLine("Em Construção - Verifique novamente mais tarde.");
+
+            while (selectId == "")
+            {
+                Console.WriteLine("Digite o ID do animal que deseja alterar a personalidade:");
+                readResult = Console.ReadLine();
+
+                if (readResult != null)
+                {
+                    selectId = readResult.ToLower().Trim();
+                    Console.WriteLine();
+                }
+            }
+
+            for (int i = 0; i < maxPets; i++)
+            {
+                if (ourAnimals[i, 0].Contains(selectId))
+                {
+                    Console.WriteLine($"Digite a nova descrição de personalidade para {ourAnimals[i,3]}");
+                    readResult = Console.ReadLine();
+
+                    if (readResult != null)
+                    {
+                        animalPersonalityDescription = readResult;
+                    }
+                }
+                else
+                {
+                    continue;
+                }
+
+                ourAnimals[i, 5] = "Personalidade: " + animalPersonalityDescription;
+            }
+
+            if (selectId != "")
+            {
+                selectId = "";
+            }
+            else
+            {
+                continue;
+            }
+
             Console.WriteLine("\nAperte ENTER para continuar");
             readResult = Console.ReadLine();
             break;
 
         case "7":
+            // editar a descrição física de um animal
+
+            while (selectId == "")
+            {
+                Console.WriteLine("Digite o ID do animal que deseja alterar a descrição física:");
+                readResult = Console.ReadLine();
+
+                if (readResult != null)
+                {
+                    selectId = readResult.ToLower().Trim();
+                    Console.WriteLine();
+                }
+            }
+
+            for (int i = 0; i < maxPets; i++)
+            {
+                if (ourAnimals[i, 0].Contains(selectId))
+                {
+                    Console.WriteLine($"Digite a nova descrição física para {ourAnimals[i,3]}");
+                    readResult = Console.ReadLine();
+
+                    if (readResult != null)
+                    {
+                        animalPhysicalDescription = readResult;
+                    }
+                }
+                else
+                {
+                    continue;
+                }
+
+                ourAnimals[i, 4] = "Descrição física: " + animalPhysicalDescription;
+            }
+
+            if (selectId != "")
+            {
+                selectId = "";
+            }
+            else
+            {
+                continue;
+            }
+
+            Console.WriteLine("\nAperte ENTER para continuar");
+            readResult = Console.ReadLine();
+            break;
+
+        case "8":
             // exibir todos os gatos com uma característica específica
 
             string catCharacteristics = "";
@@ -456,8 +557,7 @@ do
             }
 
             Array.Sort(catSearch);
-            string[] searching = {".", ".", "."};
-
+            
             // loop na array ourAnimals para buscar correspondência
             bool catFound = false;
             string catDescription = "";
@@ -473,12 +573,12 @@ do
                     {
                         if (term != null && term.Trim() != "")
                         {
-                            for(int j = 3; j > -1; j--)
+                            for(int j = 3; j > 0; j--)
                             {
                                 foreach(string icon in searching)
                                 {
                                     Console.Write($"\rConferindo nosso gato {ourAnimals[i, 3]} para {term.Trim()} {icon} {j.ToString()}");
-                                    Thread.Sleep(100);
+                                    Thread.Sleep(250);
                                 }
 
                                 Console.Write($"\r{new String(' ', Console.BufferWidth)}");
@@ -494,7 +594,7 @@ do
                         }
                     }
 
-                    // exibir informações do gato em caso de correspondência
+                    //exibir informações do gato em caso de correspondência
                     if (matchCurrentCat)
                     {
                         Console.WriteLine($"\r{ourAnimals[i,3]} ({ourAnimals[i, 0]})\n{catDescription}\n");
@@ -511,7 +611,7 @@ do
             readResult = Console.ReadLine();
             break;
 
-        case "8":
+        case "9":
             // exibir todos os cachorros com uma característica específica
 
             string dogCharacteristics = "";
@@ -535,7 +635,6 @@ do
             }
 
             Array.Sort(dogSearch);
-            string[] searchingIcon = {".", ".", "."};
 
             // loop na array ourAnimals para buscar correspondência
             bool dogFound = false;
@@ -552,12 +651,12 @@ do
                     {
                         if (term != null && term.Trim() != "")
                         {
-                            for(int j = 3; j > -1; j--)
+                            for(int j = 3; j > 0; j--)
                             {
-                                foreach(string icon in searchingIcon)
+                                foreach(string icon in searching)
                                 {
                                     Console.Write($"\rConferindo nosso cachorro {ourAnimals[i, 3]} para {term.Trim()} {icon} {j.ToString()}");
-                                    Thread.Sleep(100);
+                                    Thread.Sleep(250);
                                 }
 
                                 Console.Write($"\r{new String(' ', Console.BufferWidth)}");
@@ -573,7 +672,7 @@ do
                         }
                     }
 
-                    // exibir informações do cachorro em caso de correspondência
+                    //exibir informações do cachorro em caso de correspondência
                     if (matchCurrentDog)
                     {
                         Console.WriteLine($"\r{ourAnimals[i,3]} ({ourAnimals[i, 0]})\n{dogDescription}\n");
