@@ -89,8 +89,8 @@ do
     Console.WriteLine("|                        ADOTE UM PET                             |");
     Console.WriteLine("-------------------------------------------------------------------");
     Console.WriteLine("\nBem-vindo ao Adote um Pet. Escolha uma das opções abaixo:");
-    Console.WriteLine(" 1. Listar todas as informações dos nossos pets");
-    Console.WriteLine(" 2. Adicionar um novo animal no sistema");
+    Console.WriteLine(" 1. Listar todas as informações dos nossos animais cadastrados");
+    Console.WriteLine(" 2. Cadastrar um novo animal no sistema");
     Console.WriteLine(" 3. Preencher informações que faltam de idade e descrição física");
     Console.WriteLine(" 4. Preencher informações que faltam de nomes e personalidade");
     Console.WriteLine(" 5. Editar a idade de um animal");
